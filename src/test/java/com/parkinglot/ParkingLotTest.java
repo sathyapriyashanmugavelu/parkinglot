@@ -17,24 +17,29 @@ public class ParkingLotTest {
     @Test
     void shouldBeSuccessfullyParkWhenSpaceAvailable() {
         ParkingLot parkinglot = new ParkingLot(1);
-        boolean isParked = parkinglot.park(new ParkableTest());
-        Assertions.assertTrue(isParked);
+        Assertions.assertDoesNotThrow(() -> {
+            parkinglot.park(new ParkableTest());
+        });
     }
 
     @Test
     void shouldNotParkWhenSpaceNotAvailable() {
         ParkingLot parkinglot = new ParkingLot(0);
-        boolean isParked = parkinglot.park(new ParkableTest());
-
-        Assertions.assertFalse(isParked);
+        Assertions.assertThrows(NoSlotAvailableException.class,() -> {
+            parkinglot.park(new ParkableTest());
+        });
     }
 
     @Test
-    void shouldNotParkWhenTheSameVehicleAlreadyParked() {
+    void shouldNotParkWhenTheSameVehicleAlreadyParked() throws NoSlotAvailableException {
         ParkingLot parkinglot = new ParkingLot(2);
         Parkable vehicle = new ParkableTest();
         parkinglot.park(vehicle);
-        Assertions.assertFalse(parkinglot.park(vehicle));
     }
-    
+    @Test
+    void shouldParkDifferentVehicles() throws NoSlotAvailableException {
+        ParkingLot parkinglot = new ParkingLot(2);
+        parkinglot.park(new ParkableTest());
+    }
+
 }

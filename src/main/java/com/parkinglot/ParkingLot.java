@@ -13,12 +13,19 @@ public class ParkingLot {
         capacity=availableSpace;
     }
 
-    public boolean park(Parkable vehicle) {
-        return (isSpaceAvailable() && parkedVechile.add(vehicle));
+    public void park(Parkable vehicle) throws NoSlotAvailableException {
+        if(isSpaceAvailable())
+        {
+           parkedVechile.add(vehicle);
+        }
     }
 
-    private boolean isSpaceAvailable() {
+    private boolean isSpaceAvailable() throws NoSlotAvailableException{
         int availableSpace=capacity-parkedVechile.size();
-        return availableSpace>0;
+        if(availableSpace==0)
+        {
+            throw new NoSlotAvailableException();
+        }
+        return true;
     }
 }
