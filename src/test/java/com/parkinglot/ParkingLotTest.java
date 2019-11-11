@@ -36,4 +36,5 @@ public class ParkingLotTest {
         parkinglot.park(vehicle);
         Assertions.assertFalse(parkinglot.park(vehicle));
     }
+    
 }
