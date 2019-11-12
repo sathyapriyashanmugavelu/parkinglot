@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.*;
 
@@ -86,25 +87,46 @@ public class ParkingLotTest {
 
     @Test
     void shouldNotifyWhenParkingLotFull() throws NoSlotAvailableException, VehicleAlreadyParkedException, NoVehicleToUnparkException {
-        Notifiable notifiable = mock(Notifiable.class);
+        Notifiable owner = mock(Notifiable.class);
         ParkingLot parkinglot = new ParkingLot(1);
         ArrayList notifiableList=new ArrayList();
-        notifiableList.add(notifiable);
+        notifiableList.add(owner);
         parkinglot.addSubscribers(notifiableList);
 
         ParkableTest vehicle = new ParkableTest();
         parkinglot.park(vehicle);
 
-        verify(notifiable).notifyFull();
+        verify(owner).notifyFull();
     }
 
     @Test
     void shouldNotNotifyWhenParkingLotNotFull() throws NoSlotAvailableException, VehicleAlreadyParkedException, NoVehicleToUnparkException {
-        Notifiable notifiable = mock(Notifiable.class);
+        Notifiable owner = mock(Notifiable.class);
         ParkingLot parkinglot = new ParkingLot(2);
         ParkableTest vehicle = new ParkableTest();
         parkinglot.park(vehicle);
+        ArrayList notifiableList=new ArrayList();
+        notifiableList.add(owner);
+        parkinglot.addSubscribers(notifiableList);
 
-        verify(notifiable, never()).notifyFull();
+        verify(owner, never()).notifyFull();
     }
+
+    @Test
+    void shouldNotifyAllSubscribersWhenParkingLotFull() throws NoSlotAvailableException, VehicleAlreadyParkedException, NoVehicleToUnparkException {
+        Notifiable owner = mock(Notifiable.class);
+        Notifiable security = mock(Notifiable.class);
+        ParkingLot parkinglot = new ParkingLot(1);
+        List<Notifiable> notifiableList= new ArrayList<>();
+        notifiableList.add(owner);
+        notifiableList.add(security);
+        parkinglot.addSubscribers(notifiableList);
+
+        ParkableTest vehicle = new ParkableTest();
+        parkinglot.park(vehicle);
+
+        verify(owner).notifyFull();
+        verify(security).notifyFull();
+    }
+
 }

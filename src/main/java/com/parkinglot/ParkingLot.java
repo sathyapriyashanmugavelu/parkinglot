@@ -2,12 +2,13 @@ package com.parkinglot;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class ParkingLot {
-    private static int capacity;
+    private int capacity;
     private Set<Parkable> parkedVehicles = new HashSet<Parkable>();
-    private static ArrayList<Notifiable> notifiableList = new ArrayList<>();
+    private List<Notifiable> notifiableList = new ArrayList<>();
 
     public ParkingLot(int availableSpace) {
         capacity = availableSpace;
@@ -50,7 +51,7 @@ public class ParkingLot {
         parkedVehicles.remove(vehicle);
     }
 
-    public void addSubscribers(ArrayList<Notifiable> subscribersList) {
+    public void addSubscribers(List<Notifiable> subscribersList) {
         for (Notifiable notifiable : subscribersList) {
             if (notifiable != null) {
                 notifiableList.add(notifiable);
