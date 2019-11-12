@@ -31,15 +31,21 @@ public class ParkingLotTest {
     }
 
     @Test
-    void shouldNotParkWhenTheSameVehicleAlreadyParked() throws NoSlotAvailableException {
+    void shouldNotParkWhenTheSameVehicleAlreadyParked() throws NoSlotAvailableException ,VehicleAlreadyParkedException{
         ParkingLot parkinglot = new ParkingLot(2);
         Parkable vehicle = new ParkableTest();
         parkinglot.park(vehicle);
+        Assertions.assertThrows(VehicleAlreadyParkedException.class,() -> {
+            parkinglot.park(vehicle);
+        });
     }
     @Test
-    void shouldParkDifferentVehicles() throws NoSlotAvailableException {
+    void shouldParkDifferentVehicles() throws NoSlotAvailableException,VehicleAlreadyParkedException {
         ParkingLot parkinglot = new ParkingLot(2);
         parkinglot.park(new ParkableTest());
+        Assertions.assertDoesNotThrow(() -> {
+            parkinglot.park(new ParkableTest());
+        });
     }
 
 }

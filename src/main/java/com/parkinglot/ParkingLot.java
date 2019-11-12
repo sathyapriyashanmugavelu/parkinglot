@@ -13,10 +13,13 @@ public class ParkingLot {
         capacity=availableSpace;
     }
 
-    public void park(Parkable vehicle) throws NoSlotAvailableException {
+    public void park(Parkable vehicle) throws NoSlotAvailableException,VehicleAlreadyParkedException {
         if(isSpaceAvailable())
         {
-           parkedVechile.add(vehicle);
+           if(!parkedVechile.add(vehicle))
+           {
+               throw new VehicleAlreadyParkedException();
+           }
         }
     }
 
