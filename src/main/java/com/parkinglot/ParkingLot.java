@@ -28,7 +28,7 @@ public class ParkingLot {
     }
     private void add(Parkable vehicle){
         parkedVehicles.add(vehicle);
-        if(!isSpaceAvailable()){
+        if(owner != null && !isSpaceAvailable()){
             owner.notifyOwner();
         }
     }

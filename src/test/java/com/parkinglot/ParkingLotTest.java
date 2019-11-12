@@ -88,6 +88,7 @@ public class ParkingLotTest {
         ParkingLot parkinglot = new ParkingLot(1, owner);
         ParkableTest vehicle = new ParkableTest();
         parkinglot.park(vehicle);
+
         verify(owner).notifyOwner();
     }
 
@@ -97,6 +98,7 @@ public class ParkingLotTest {
         ParkingLot parkinglot = new ParkingLot(2, owner);
         ParkableTest vehicle = new ParkableTest();
         parkinglot.park(vehicle);
+
         verify(owner, never()).notifyOwner();
     }
 
