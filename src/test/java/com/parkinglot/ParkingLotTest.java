@@ -9,6 +9,7 @@ public class ParkingLotTest {
 
     class ParkableTest implements Parkable {
     }
+
     @Test
     void shouldBeSuccessfullyParkWhenSpaceAvailable() {
         ParkingLot parkinglot = new ParkingLot(1);
@@ -22,23 +23,24 @@ public class ParkingLotTest {
     void shouldNotParkWhenSpaceNotAvailable() {
         ParkingLot parkinglot = new ParkingLot(0);
 
-        Assertions.assertThrows(NoSlotAvailableException.class,() -> {
+        Assertions.assertThrows(NoSlotAvailableException.class, () -> {
             parkinglot.park(new ParkableTest());
         });
     }
 
     @Test
-    void shouldNotParkWhenTheSameVehicleAlreadyParked() throws NoSlotAvailableException ,VehicleAlreadyParkedException{
+    void shouldNotParkWhenTheSameVehicleAlreadyParked() throws NoSlotAvailableException, VehicleAlreadyParkedException {
         ParkingLot parkinglot = new ParkingLot(2);
         Parkable vehicle = new ParkableTest();
         parkinglot.park(vehicle);
 
-        Assertions.assertThrows(VehicleAlreadyParkedException.class,() -> {
+        Assertions.assertThrows(VehicleAlreadyParkedException.class, () -> {
             parkinglot.park(vehicle);
         });
     }
+
     @Test
-    void shouldParkDifferentVehicles() throws NoSlotAvailableException,VehicleAlreadyParkedException {
+    void shouldParkDifferentVehicles() throws NoSlotAvailableException, VehicleAlreadyParkedException {
         ParkingLot parkinglot = new ParkingLot(2);
         parkinglot.park(new ParkableTest());
 
@@ -48,19 +50,19 @@ public class ParkingLotTest {
     }
 
     @Test
-    void shouldNotUnParkWhenVehicleNotParked(){
+    void shouldNotUnParkWhenVehicleNotParked() {
         ParkingLot parkinglot = new ParkingLot(1);
-        ParkableTest vehicle=new ParkableTest();
+        ParkableTest vehicle = new ParkableTest();
 
-        Assertions.assertThrows(NoVehicleToUnparkException.class,() -> {
-         parkinglot.unPark(vehicle);
+        Assertions.assertThrows(NoVehicleToUnparkException.class, () -> {
+            parkinglot.unPark(vehicle);
         });
     }
 
     @Test
-    void shouldBeSuccessfulWhenUnParkParkedVehicle() throws NoSlotAvailableException,VehicleAlreadyParkedException{
+    void shouldBeSuccessfulWhenUnParkParkedVehicle() throws NoSlotAvailableException, VehicleAlreadyParkedException {
         ParkingLot parkinglot = new ParkingLot(1);
-        ParkableTest vehicle=new ParkableTest();
+        ParkableTest vehicle = new ParkableTest();
         parkinglot.park(vehicle);
 
         Assertions.assertDoesNotThrow(() -> {
@@ -69,9 +71,9 @@ public class ParkingLotTest {
     }
 
     @Test
-    void shouldBeSuccessfulWhenParkAfterUnParked() throws NoSlotAvailableException,VehicleAlreadyParkedException, NoVehicleToUnparkException {
+    void shouldBeSuccessfulWhenParkAfterUnParked() throws NoSlotAvailableException, VehicleAlreadyParkedException, NoVehicleToUnparkException {
         ParkingLot parkinglot = new ParkingLot(1);
-        ParkableTest vehicle=new ParkableTest();
+        ParkableTest vehicle = new ParkableTest();
         parkinglot.park(vehicle);
         parkinglot.unPark(vehicle);
 
@@ -81,21 +83,21 @@ public class ParkingLotTest {
     }
 
     @Test
-    void shouldNotifyWhenParkingLotFull() throws NoSlotAvailableException,VehicleAlreadyParkedException, NoVehicleToUnparkException {
+    void shouldNotifyWhenParkingLotFull() throws NoSlotAvailableException, VehicleAlreadyParkedException, NoVehicleToUnparkException {
         Owner owner = mock(Owner.class);
-        ParkingLot parkinglot = new ParkingLot(1,owner);
-        ParkableTest vehicle=new ParkableTest();
+        ParkingLot parkinglot = new ParkingLot(1, owner);
+        ParkableTest vehicle = new ParkableTest();
         parkinglot.park(vehicle);
         verify(owner).notifyOwner();
     }
 
     @Test
-    void shouldNotNotifyWhenParkingLotNotFull() throws NoSlotAvailableException,VehicleAlreadyParkedException, NoVehicleToUnparkException {
+    void shouldNotNotifyWhenParkingLotNotFull() throws NoSlotAvailableException, VehicleAlreadyParkedException, NoVehicleToUnparkException {
         Owner owner = mock(Owner.class);
-        ParkingLot parkinglot = new ParkingLot(2,owner);
-        ParkableTest vehicle=new ParkableTest();
+        ParkingLot parkinglot = new ParkingLot(2, owner);
+        ParkableTest vehicle = new ParkableTest();
         parkinglot.park(vehicle);
-        verify(owner,never()).notifyOwner();
+        verify(owner, never()).notifyOwner();
     }
 
 }
