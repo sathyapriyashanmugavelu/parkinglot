@@ -8,10 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ParkingLotTest {
 
     class ParkableTest implements Parkable {
-        @Override
-        public boolean park() {
-            return false;
-        }
     }
 
     @Test
@@ -45,6 +41,16 @@ public class ParkingLotTest {
         parkinglot.park(new ParkableTest());
         Assertions.assertDoesNotThrow(() -> {
             parkinglot.park(new ParkableTest());
+        });
+    }
+
+    @Test
+    void shouldNotUnParkWhenVehicleNotParked() throws NoSlotAvailableException,VehicleAlreadyParkedException{
+        ParkingLot parkinglot = new ParkingLot(1);
+        ParkableTest vehicle=new ParkableTest();
+        //parkinglot.park(vehicle);
+        Assertions.assertThrows(VehicleDoesNotExistToUnParkException.class,() -> {
+         parkinglot.unPark(vehicle);
         });
     }
 
