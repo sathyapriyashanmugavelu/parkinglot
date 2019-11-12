@@ -1,4 +1,4 @@
 package com.parkinglot;
 
-public class VehicleDoesNotExistToUnParkException extends Exception {
+public class NoVehicleToUnparkException extends Exception {
 }

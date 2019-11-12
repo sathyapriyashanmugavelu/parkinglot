@@ -3,13 +3,13 @@ package com.parkinglot;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class ParkingLotTest {
 
     class ParkableTest implements Parkable {
     }
-
     @Test
     void shouldBeSuccessfullyParkWhenSpaceAvailable() {
         ParkingLot parkinglot = new ParkingLot(1);
@@ -53,7 +53,7 @@ public class ParkingLotTest {
         ParkingLot parkinglot = new ParkingLot(1);
         ParkableTest vehicle=new ParkableTest();
 
-        Assertions.assertThrows(VehicleDoesNotExistToUnParkException.class,() -> {
+        Assertions.assertThrows(NoVehicleToUnparkException.class,() -> {
          parkinglot.unPark(vehicle);
         });
     }
@@ -70,7 +70,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void shouldBeSuccessfulWhenParkAfterUnParked() throws NoSlotAvailableException,VehicleAlreadyParkedException,VehicleDoesNotExistToUnParkException{
+    void shouldBeSuccessfulWhenParkAfterUnParked() throws NoSlotAvailableException,VehicleAlreadyParkedException, NoVehicleToUnparkException {
         ParkingLot parkinglot = new ParkingLot(1);
         ParkableTest vehicle=new ParkableTest();
         parkinglot.park(vehicle);
@@ -79,6 +79,15 @@ public class ParkingLotTest {
         Assertions.assertDoesNotThrow(() -> {
             parkinglot.park(vehicle);
         });
+    }
+
+    @Test
+    void shouldNotifyWhenParkingLotFull() throws NoSlotAvailableException,VehicleAlreadyParkedException, NoVehicleToUnparkException {
+        Owner owner = mock(Owner.class);
+        ParkingLot parkinglot = new ParkingLot(1,owner);
+        ParkableTest vehicle=new ParkableTest();
+        parkinglot.park(vehicle);
+        verify(owner).notifyOwner();
     }
 
 }
