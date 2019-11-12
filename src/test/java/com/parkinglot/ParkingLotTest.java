@@ -3,8 +3,7 @@ package com.parkinglot;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 public class ParkingLotTest {
 
@@ -88,6 +87,15 @@ public class ParkingLotTest {
         ParkableTest vehicle=new ParkableTest();
         parkinglot.park(vehicle);
         verify(owner).notifyOwner();
+    }
+
+    @Test
+    void shouldNotNotifyWhenParkingLotNotFull() throws NoSlotAvailableException,VehicleAlreadyParkedException, NoVehicleToUnparkException {
+        Owner owner = mock(Owner.class);
+        ParkingLot parkinglot = new ParkingLot(2,owner);
+        ParkableTest vehicle=new ParkableTest();
+        parkinglot.park(vehicle);
+        verify(owner,never()).notifyOwner();
     }
 
 }
