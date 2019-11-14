@@ -39,7 +39,7 @@ public class ParkingLot {
         }
     }
 
-    private boolean isSpaceAvailable() {
+    public boolean isSpaceAvailable() {
         int availableSpace = capacity - parkedVehicles.size();
         return availableSpace > 0;
     }

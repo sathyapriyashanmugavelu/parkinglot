@@ -10,14 +10,14 @@ public class Attendant{
         this.parkingLotList=LotList;
     }
 
-    public void attendantPark(Parkable car) throws NoSlotAvailableException, VehicleAlreadyParkedException {
+    public void attendantPark(Parkable car) throws AllParkingLotsFullException, NoSlotAvailableException, VehicleAlreadyParkedException {
         for(ParkingLot parkingLot :parkingLotList){
             if(parkingLot.isSpaceAvailable()){
                 parkingLot.park(car);
                 return;
             }
         }
-        throw new NoSlotAvailableException();
+        throw new AllParkingLotsFullException();
     }
 
 

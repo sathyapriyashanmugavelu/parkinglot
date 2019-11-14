@@ -56,7 +56,7 @@ public class AttendantTest {
         when(fullLot.isSpaceAvailable()).thenReturn(false);
         when(availableLot.isSpaceAvailable()).thenReturn(false);
 
-        assertThrows(NoSlotAvailableException.class, () ->
+        assertThrows(AllParkingLotsFullException.class, () ->
                 attendant.attendantPark(car));
     }
 
